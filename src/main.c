@@ -205,7 +205,7 @@ int main()
 
 					if ( tour == (nbCol*nbLignes) )
 					{
-						printf("\nMatch Nul !\n\nAppuyer sur 'Entree' pour conitnuer...");
+						printf("\nMatch Nul !\n\nAppuyer sur 'Entree' pour continuer...");
 						flushbuff();
 					}
 
