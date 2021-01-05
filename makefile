@@ -8,11 +8,7 @@ WFLAGS=-Wall
 
 GFLAG=-g
 
-<<<<<<< HEAD
 OBJS = src/*.c
-=======
-OBJS = src/partie.c src/main.c src/safeinput.c src/SaveAndSettings.c
->>>>>>> e7bd97aa29a20478d1d7e37c848f7cd8a004752d
 
 EXEC_NAME = Exec
 
