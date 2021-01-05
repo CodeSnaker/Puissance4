@@ -118,8 +118,9 @@ int settings_menu()
         puts("            SETTINGS            ");
         puts("--------------------------------");
 
-        couleur(VERT);
+        couleur(ROUGE);
         printf("0 - Retour\n");
+        couleur(VERT);
         printf("1 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
         printf("2 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
         printf("3 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
@@ -147,8 +148,10 @@ int settings_menu()
             puts("            SETTINGS            ");
             puts("--------------------------------");
 
-            couleur(VERT);
+
+            couleur(ROUGE);
             printf("0 - Retour\n");
+            couleur(VERT);
             printf("1 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
             printf("2 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
             printf("3 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
