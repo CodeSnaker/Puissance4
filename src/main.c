@@ -104,7 +104,7 @@ int main()
 				
 			case 3: // Partie Libre
 
-				while( settingsChoice != 6)
+				while( settingsChoice != 5)
 				{	
 					clear_screen();
 					settingsChoice = settings_menu();
