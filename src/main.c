@@ -108,8 +108,10 @@ int main()
 				{	
 					clear_screen();
 					settingsChoice = settings_menu();
+					if ( !settingsChoice ) break;
 					settings( settingsChoice );
 				}
+				if ( !settingsChoice ) break;
 
 				clear_screen();
 

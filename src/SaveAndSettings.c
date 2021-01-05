@@ -119,11 +119,12 @@ int settings_menu()
         puts("--------------------------------");
 
         couleur(VERT);
-        printf("0 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
-        printf("1 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
-        printf("2 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
+        printf("0 - Retour\n");
+        printf("1 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
+        printf("2 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
+        printf("3 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
 
-        printf("3 - Changer le nom des joueurs ( ");
+        printf("4 - Changer le nom des joueurs ( ");
         couleur(JAUNE);
         printf("Joueur 1 actuel : %s ", nomJoueurUn);
         couleur(VERT);
@@ -133,12 +134,12 @@ int settings_menu()
         couleur(VERT);
         printf(" )\n");
         
-        printf("4 - Mettre les reglages par defaut\n");
-        printf("5 - Lancer la partie\n");
+        printf("5 - Mettre les reglages par defaut\n");
+        printf("6 - Lancer la partie\n");
         couleur(RESET);
 
         reads(choix, 2);
-        while( strtol(choix, NULL, 10) > 5 || strtol(choix, NULL, 10) < 0 || !isdigit(choix[0]))
+        while( strtol(choix, NULL, 10) > 6 || strtol(choix, NULL, 10) < 0 || !isdigit(choix[0]))
         {   
             clear_screen();
 
@@ -147,11 +148,12 @@ int settings_menu()
             puts("--------------------------------");
 
             couleur(VERT);
-            printf("0 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
-            printf("1 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
-            printf("2 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
+            printf("0 - Retour\n");
+            printf("1 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
+            printf("2 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
+            printf("3 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
 
-            printf("3 - Changer le nom des joueurs ( ");
+            printf("4 - Changer le nom des joueurs ( ");
             couleur(JAUNE);
             printf("Joueur 1 actuel : %s ", nomJoueurUn);
             couleur(VERT);
@@ -161,18 +163,18 @@ int settings_menu()
             couleur(VERT);
             printf(" )\n");
 
-            printf("4 - Mettre les reglages par defaut\n");
-            printf("5 - Lancer la partie\n");
+            printf("5 - Mettre les reglages par defaut\n");
+            printf("6 - Lancer la partie\n");
             couleur(RESET);
 
             if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
-            else if( strtol(choix, NULL, 10) > 5 || strtol(choix, NULL, 10) < 0) printf("\nLe numero doit etre compris entre 0 et 5.\nVeuillez entrer un autre numero : ");
+            else if( strtol(choix, NULL, 10) > 6 || strtol(choix, NULL, 10) < 0) printf("\nLe numero doit etre compris entre 0 et 5.\nVeuillez entrer un autre numero : ");
             reads(choix, 2);
             }
 
             numChoix = strtol( choix, NULL, 10);
 
-        if( numChoix == 4 || numChoix == 5 )
+        if( numChoix == 5 || numChoix == 6 )
         {
             confirmation = confirm_answer();
         }
@@ -188,7 +190,7 @@ void settings( int settingsChoice)
 
     switch (settingsChoice)
     {
-        case 0: // Modifier le nombre de lignes
+        case 1: // Modifier le nombre de lignes
             
             printf("\n\nVeuillez entrer un nombre compris entre %d et %d : ", NB_LIGNE_MIN, NB_LIGNE_MAX);
 
@@ -212,7 +214,7 @@ void settings( int settingsChoice)
 
             break;
         
-        case 1: // Modifier le nombre de colonnes
+        case 2: // Modifier le nombre de colonnes
 
             printf("\n\nVeuillez entrer un nombre compris entre %d et %d : ", NB_COL_MIN, NB_COL_MAX);
 
@@ -236,7 +238,7 @@ void settings( int settingsChoice)
 
             break;
 
-        case 2: // modifier le nombre de pions a aligner
+        case 3: // modifier le nombre de pions a aligner
 
             printf("Veuillez entrer un nombre compris entre %d et %d ( max delimite par les nombres de colonnes et de lignes) : ", NB_PIONS_WIN_MIN, min( nbLignes, nbCol ));
 
@@ -253,11 +255,11 @@ void settings( int settingsChoice)
 
             break;
         
-        case 3: // modifier le nom des joueurs
+        case 4: // modifier le nom des joueurs
             player_name_change();
             break;
 
-        case 4: // mettre les reglages par defaut
+        case 5: // mettre les reglages par defaut
             set_default_settings();
             break;
 
