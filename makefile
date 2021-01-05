@@ -8,7 +8,7 @@ WFLAGS=-Wall
 
 GFLAG=-g
 
-OBJS = src/partie.c src/Projet-2-1.c src/safeinput.c src/SaveAndSettings.c
+OBJS = src/partie.c src/main.c src/safeinput.c src/SaveAndSettings.c
 
 EXEC_NAME = Exec
 
