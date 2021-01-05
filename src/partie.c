@@ -309,15 +309,13 @@ int menu_principal(void)
 	couleur(VERT);
 	puts("1 - Regles du jeu");
 	puts("2 - Jouer a 2");
-	puts("3 - Partie rapide (1 manche)");
-	puts("4 - Jouer contre IA");
-	puts("5 - Mode libre (choix du nombre de manches et nombre lignes/colonnes)"); 
-    puts("6 - Charger une sauvegarde");
-    puts("7 - Supprimer une sauvegarde");
+	puts("3 - Mode libre (choix du nombre de manches et nombre lignes/colonnes)"); 
+    puts("4 - Charger une sauvegarde");
+    puts("5 - Supprimer une sauvegarde");
     couleur(RESET);
 
     reads(choix, 2);
-    while( strtol(choix, NULL, 10) > 7 || strtol(choix, NULL, 10) < 0 || !strisnumber(choix))
+    while( strtol(choix, NULL, 10) > 5 || strtol(choix, NULL, 10) < 0 || !strisnumber(choix))
     {
         system("clear");
 
@@ -329,15 +327,13 @@ int menu_principal(void)
         couleur(VERT);
         puts("1 - Regles du jeu");
         puts("2 - Jouer a 2");
-        puts("3 - Partie rapide (1 manche)");
-        puts("4 - Jouer contre IA");
-        puts("5 - Mode libre (choix du nombre de manches et nombre lignes/colonnes)"); 
-        puts("6 - Charger une sauvegarde");
-        puts("7 - Supprimer une sauvegarde");
+        puts("3 - Mode libre (choix du nombre de manches et nombre lignes/colonnes)"); 
+        puts("4 - Charger une sauvegarde");
+        puts("5 - Supprimer une sauvegarde");
         couleur(RESET);
 
         if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
-        else if( strtol(choix, NULL, 10) > 7 || strtol(choix, NULL, 10) < 0) printf("\nLe numero doit etre compris entre 0 et 6.\nVeuillez entrer un autre numero : ");
+        else if( strtol(choix, NULL, 10) > 5 || strtol(choix, NULL, 10) < 0) printf("\nLe numero doit etre compris entre 0 et 6.\nVeuillez entrer un autre numero : ");
         
         reads(choix, 2);
     }

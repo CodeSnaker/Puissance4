@@ -102,9 +102,9 @@ int main()
 
     			break;
 				
-			case 5: // Partie Libre
+			case 3: // Partie Libre
 
-				while( settingsChoice != 5)
+				while( settingsChoice != 3)
 				{	
 					clear_screen();
 					settingsChoice = settings_menu();
@@ -154,13 +154,13 @@ int main()
 
                 break;
 
-				case 6: // Charger une sauvegarde
+				case 4: // Charger une sauvegarde
 
 					while ( 1 )
 					{
 						loadChoice = savefile_menu("Charger une sauvegarde :");
 
-						if ( !loadChoice ) goto end_main_case_6;
+						if ( !loadChoice ) goto end_main_case_4;
 
 						if ( load_save( &partie, loadChoice ) )
 						{
@@ -207,14 +207,14 @@ int main()
 						flushbuff();
 					}
 
-					end_main_case_6:
+					end_main_case_4:
 					break;
 
-				case 7: // Supprimer une sauvegarde
+				case 5: // Supprimer une sauvegarde
 					while( 1 )
 					{
 						deleteChoice = savefile_menu("Supprimer une Sauvegarde :");
-						if ( !deleteChoice ) goto end_main_case_7;
+						if ( !deleteChoice ) goto end_main_case_5;
 
 						if ( del_save( deleteChoice ) )
 						{
@@ -222,7 +222,7 @@ int main()
 							flushbuff();
 						}
 					}
-					end_main_case_7:
+					end_main_case_5:
 					break;
 
 				
