@@ -5,7 +5,7 @@
 #include "safeinput.h"
 
 
-void flushbuff() 
+void flushbuff() // Inspire du cours sur le langage c sur OpenClassroom par Mathieu Nebra
 {
     int c;
     while((c = getchar()) != EOF && c != '\n')
@@ -38,7 +38,7 @@ int readfile(char *stringArr, int limit, FILE *file)
     }
 }
 
-int reads(char *stringArr, int limit) 
+int reads(char *stringArr, int limit) // Inspire du cours sur le langage c sur OpenClassroom par Mathieu Nebra
 {
     char *newlinePoint=NULL;
     if(fgets(stringArr, limit+1, stdin) != NULL)

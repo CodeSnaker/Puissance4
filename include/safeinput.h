@@ -10,7 +10,7 @@
  * @brief flushes stdin buffer
  * * if you use this, make sure that there ARE characters in the buffer, else it will create weird behaviors
  */
-void flushbuff();
+void flushbuff(); // Inspire du cours sur le langage c sur OpenClassroom par Mathieu Nebra
 
 /**
  * @brief reads a line from a file and replaces the newline caracter by '\0'
@@ -30,7 +30,7 @@ int readfile(char *stringArr, int limit, FILE *file);
  * ! stringArr must have space to store the characters '\0' at the end of the string
  * @return int 
  */
-int reads(char *stringArr, int limit);
+int reads(char *stringArr, int limit); // Inspire du cours sur le langage c sur OpenClassroom par Mathieu Nebra
 
 /**
  * @brief turns the reads function's result into a long int
