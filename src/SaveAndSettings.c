@@ -107,30 +107,30 @@ void player_name_change()
 
 void print_settings_choices()
 {
-        puts("--------------------------------");
-        puts("            SETTINGS            ");
-        puts("--------------------------------");
+    puts("--------------------------------");
+    puts("            SETTINGS            ");
+    puts("--------------------------------");
 
-        printf("\033[%sm",ROUGE);
-        printf("0 - Retour\n");
-        printf("\033[%sm",VERT);
-        printf("1 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
-        printf("2 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
-        printf("3 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
+    printf("\033[%sm",ROUGE);
+    printf("0 - Retour\n");
+    printf("\033[%sm",VERT);
+    printf("1 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
+    printf("2 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
+    printf("3 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
 
-        printf("4 - Changer le nom des joueurs ( ");
-        printf("\033[%sm",JAUNE);
-        printf("Joueur 1 actuel : %s ", nomJoueurUn);
-        printf("\033[%sm",VERT);
-        printf(";");
-        printf("\033[%sm",ROUGE);
-        printf(" Joueur 2 actuel : %s", nomJoueurDeux);
-        printf("\033[%sm",VERT);
-        printf(" )\n");
-        
-        printf("5 - Mettre les reglages par defaut\n");
-        printf("6 - Lancer la partie\n");
-        printf("\033[%sm",RESET);
+    printf("4 - Changer le nom des joueurs ( ");
+    printf("\033[%sm",JAUNE);
+    printf("Joueur 1 actuel : %s ", nomJoueurUn);
+    printf("\033[%sm",VERT);
+    printf(";");
+    printf("\033[%sm",ROUGE);
+    printf(" Joueur 2 actuel : %s", nomJoueurDeux);
+    printf("\033[%sm",VERT);
+    printf(" )\n");
+    
+    printf("5 - Mettre les reglages par defaut\n");
+    printf("6 - Lancer la partie\n");
+    printf("\033[%sm",RESET);
 }
 
 int settings_menu()
