@@ -489,10 +489,8 @@ int overwrite_file(const char *fileName, puiss4 currentGame)
             if ( !write_savefile(fileName, currentGame) ) 
             {
                 printf("Erreur : l'ecriture de la sauvegarde n'a pas pu etre effectuee.\n");
-                
                 return 0;
             }
-            
             return 1;
         }
         fclose(saveFile);
@@ -517,7 +515,6 @@ int save( puiss4 game, int saveSlot )
     }
     else printf("\nPartie Sauvegardee.\nAppuyer sur 'Entree' pour continuer...");
     flushbuff(); 
-
     return 1;
 }
 
