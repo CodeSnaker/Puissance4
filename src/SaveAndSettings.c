@@ -103,7 +103,6 @@ void player_name_change()
         printf("\n\n");
         confirmation = confirm_answer();  
     }
-
 }
 
 void print_settings_choices()
@@ -300,9 +299,10 @@ void savefile_display(int saveNumber)
 
         //Affichage des joueurs
         char *pointToNewline=NULL;
-        fgets(tempBuffer, 26, fileToRead);
+        fgets(tempBuffer, 26, fileToRead); // On pourrait utiliser la fonction readfile() definie dans safeinput.c, mais compte-tenu des consignes, on ne peut pas l'utiliser
         pointToNewline = strchr(tempBuffer, '\n');
         *pointToNewline = '\0';
+
         printf("%s vs ", tempBuffer);
 
         fgets(tempBuffer, 26, fileToRead);
@@ -433,17 +433,7 @@ int write_savefile(const char *fileName, puiss4 savedGame)
         return 0;
     }
 
-    fprintf(destFile, "%s\n", nomJoueurUn);
-    fprintf(destFile, "%s\n", nomJoueurDeux);
-    fprintf(destFile, "%d\n", date.tm_mday );
-    fprintf(destFile, "%d\n", date.tm_mon );
-    fprintf(destFile, "%d\n", date.tm_year );
-    fprintf(destFile, "%d\n", date.tm_hour );
-    fprintf(destFile, "%d\n", date.tm_min );
-    fprintf(destFile, "%d\n", tour);
-    fprintf(destFile, "%d\n", nbLignes);
-    fprintf(destFile, "%d\n", nbCol);
-    fprintf(destFile, "%d\n", nbPionsGagnant);
+    fprintf(destFile, "%s\n%s\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n", nomJoueurUn, nomJoueurDeux, date.tm_mday, date.tm_mon, date.tm_year, date.tm_hour, date.tm_min, tour, nbLignes, nbCol, nbPionsGagnant);
 
     for( int i = 0; i < nbLignes; i++ )
     {
@@ -610,7 +600,7 @@ int load_save( puiss4 *destGrid, int saveSlot )
         }
         // Chargement des noms de joueur
         char *pointToNewline = NULL;
-        fgets(tempBuffer, 26, loadedFile);
+        fgets(tempBuffer, 26, loadedFile); // On pourrait utiliser la fonction readfile() definie dans safeinput.c, mais compte-tenu des consignes, on ne peut pas l'utiliser
         pointToNewline = strchr(tempBuffer, '\n');
         *pointToNewline = '\0';
         strcpy( nomJoueurUn, tempBuffer );
