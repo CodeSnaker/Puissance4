@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 22 - 12 - 2020
  * 
- * @copyright Copyright (c) 2021
+ * @copyright Copyright (c) 2020
  * 
  ************************************************************************************************/
 
@@ -39,7 +39,6 @@ puiss4 initialisation(puiss4 *a)
 
 void affiche_jeu (puiss4 jeu)
 {
-
     printf("\n");
 	for( int l = nbLignes - 1 ; l >= 0 ; l--) //on decremente, parce que dans le terminal ça s'affiche du haut vers le bas
     {
@@ -48,16 +47,16 @@ void affiche_jeu (puiss4 jeu)
         {
           	if( jeu.grille[l][c] == PIONJ2 ) //s'il y a un pion de joueur 2, on met un x et on printf la demarcation de la colonne
             {
-				couleur(ROUGE);
+				printf("\033[%sm",ROUGE);
     			printf(" x");  // - 4 caracteres
-				couleur(RESET);
+				printf("\033[%sm",RESET);
 				printf(" |");
             }
             else if( jeu.grille[l][c] == PIONJ1 ) //Pareil avec les pions de joueur 1
             {
-				couleur(JAUNE);
+				printf("\033[%sm",JAUNE);
                 printf(" o");// - 4 caracteres
-				couleur(RESET);
+				printf("\033[%sm",RESET);
 				printf(" |");
             }
           	else printf("   |"); //Si c'est un espace vide (ex: 0), on met juste un espace - 4 caracteres
@@ -156,7 +155,6 @@ int gagne( puiss4 jeu, int joueur )
                     printf("\nVictoire par ligne.");
                     return 1;
                 }
-
                 
                 if ( check_row( jeu, i, nbCol-1, 1, -1, PIONJ2 ) ) // sens backslash : moitie haute-droite de la grille
                 {
@@ -173,8 +171,7 @@ int gagne( puiss4 jeu, int joueur )
             }
             
             for ( int j = 0; j < nbCol; j++ )
-            {   
-                
+            {       
                 if ( check_row( jeu, 0, j, 1, 0, PIONJ2 ) ) // verifie les colonnes
                 {
                     printf("\nVictoire par colonne.");
@@ -192,7 +189,6 @@ int gagne( puiss4 jeu, int joueur )
                     printf("\nVictoire par diagonale.");
                     return 1;
                 }
-
             }
             break;
         
@@ -219,9 +215,9 @@ puiss4 ajoute_pion(puiss4 *partiePuiss4, int joueur)
     {
         printf("\nAu tour de %s.\n", nomJoueurDeux);
     }
-    couleur(VERT);
+    printf("\033[%sm", VERT);
     printf("Pour mettre pause, entrez la lettre p.\n\n");
-    couleur(RESET);
+    printf("\033[%sm", RESET);
     printf( "Veuillez entrer le numero de la colonne ou inserer le pion : ");
 
     reads ( temp1, 3 );
@@ -240,26 +236,26 @@ puiss4 ajoute_pion(puiss4 *partiePuiss4, int joueur)
                 pauseChoice = menu_pause(); 
             }
 
-            system("clear");
+            clear_screen();
             affiche_jeu(*partiePuiss4);
             printf("\nTour n°%d\n", tour);
             if ( joueur ) printf("\nTour de %s\n", nomJoueurDeux);
             else printf( "\nTour de %s\n", nomJoueurUn );
-            couleur(VERT);
+            printf("\033[%sm",VERT);
             printf("Pour mettre pause, entrez la lettre p.\n");
-            couleur(RESET);
+            printf("\033[%sm",RESET);
             printf( "\nVeuillez entrer le numero de la colonne ou inserer le pion : ");
         }
         else
         {
-            system("clear");
+            clear_screen();
             affiche_jeu( *partiePuiss4 );
             printf("\nTour n°%d\n", tour);
             if ( joueur ) printf("\nTour de %s\n", nomJoueurUn);
             else printf("\nTour de %s\n", nomJoueurDeux);
-            couleur(VERT);
+            printf("\033[%sm",VERT);
             printf("Pour mettre pause, entrez la lettre p.\n");
-            couleur(RESET);
+            printf("\033[%sm",RESET);
 
             //Affichages d'erreur pour l'utilisateur
             if( strisnumber ( temp1 ) == 0 ) printf("\nCe n'est pas un chiffre ou le bouton de pause!\n"\
@@ -295,49 +291,58 @@ puiss4 ajoute_pion(puiss4 *partiePuiss4, int joueur)
     return *partiePuiss4;
 }
 
-
-
-int menu_principal(void)
+void print_main_menu_choices()
 {
-	char choix[2];
-
     puts("------------------------------------------------------------");
     puts("                    PUISSANCE 4");
     puts("------------------------------------------------------------");
-	couleur(ROUGE);
+	printf("\033[%sm",ROUGE);
     puts("0 - Quitter le jeu");
-	couleur(VERT);
+	printf("\033[%sm",VERT);
 	puts("1 - Regles du jeu");
 	puts("2 - Jouer a 2");
 	puts("3 - Mode libre (choix du nombre de manches et nombre lignes/colonnes)"); 
     puts("4 - Charger une sauvegarde");
     puts("5 - Supprimer une sauvegarde");
-    couleur(RESET);
+    printf("\033[%sm",RESET);
+}
+
+int menu_principal(void)
+{
+	char choix[2];
+
+    print_main_menu_choices();
 
     reads(choix, 2);
-    while( strtol(choix, NULL, 10) > 5 || strtol(choix, NULL, 10) < 0 || !strisnumber(choix))
+    while( strtol(choix, NULL, 10) > 5 || strtol(choix, NULL, 10) < 0 || !strisnumber(choix) || choix[0] == '\0' )
     {
-        system("clear");
+        clear_screen();
 
-        puts("------------------------------------------------------------");
-        puts("                    PUISSANCE 4");
-        puts("------------------------------------------------------------");
-        couleur(ROUGE);
-        puts("0 - Quitter le jeu");
-        couleur(VERT);
-        puts("1 - Regles du jeu");
-        puts("2 - Jouer a 2");
-        puts("3 - Mode libre (choix du nombre de manches et nombre lignes/colonnes)"); 
-        puts("4 - Charger une sauvegarde");
-        puts("5 - Supprimer une sauvegarde");
-        couleur(RESET);
-
-        if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
+        print_main_menu_choices();
+        if( choix[0] == '\0' ) printf("\nIl semblerait que vous n'avez rien entre du tout\n"\
+                                        "Veuillez entrer un chiffre correspondant a une colonne : ");
+        else if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
         else if( strtol(choix, NULL, 10) > 5 || strtol(choix, NULL, 10) < 0) printf("\nLe numero doit etre compris entre 0 et 6.\nVeuillez entrer un autre numero : ");
         
         reads(choix, 2);
     }
 	return (int) strtol(choix, NULL, 10);
+}
+
+void print_pause_menu_choices()
+{
+    puts("--------------------------------");
+    puts("             PAUSE              ");
+    puts("--------------------------------");
+
+    printf("\033[%sm",ROUGE);
+    puts("0 - Quitter la partie");
+    printf("\033[%sm",VERT);
+    puts("1 - Sauvegarder");
+    puts("2 - Charger une partie");
+    puts("3 - Recommencer la partie");
+    puts("4 - Continuer la partie");
+    printf("\033[%sm",RESET);
 }
 
 int menu_pause(void)
@@ -348,39 +353,20 @@ int menu_pause(void)
 
     while (!confirmation)
     {   
-        system("clear");
-        puts("--------------------------------");
-        puts("             PAUSE              ");
-        puts("--------------------------------");
-
-        couleur(ROUGE);
-        puts("0 - Quitter la partie");
-        couleur(VERT);
-        puts("1 - Sauvegarder");
-        puts("2 - Charger une partie");
-        puts("3 - Recommencer la partie");
-        puts("4 - Continuer la partie");
-        couleur(RESET);
+        clear_screen();
+        
+        print_pause_menu_choices();
 
         reads(choix, 2);
-        while( strtol(choix, NULL, 10) > 4 || strtol(choix, NULL, 10) < 0 || !strisnumber(choix))
+        while( strtol(choix, NULL, 10) > 4 || strtol(choix, NULL, 10) < 0 || !strisnumber(choix) || choix[0] == '\0')
         {   
-            system("clear");
+            clear_screen();
 
-            puts("--------------------------------");
-            puts("             PAUSE              ");
-            puts("--------------------------------");
+            print_pause_menu_choices();
 
-            couleur(ROUGE);
-            puts("0 - Quitter la partie");
-            couleur(VERT);
-            puts("1 - Sauvegarder");
-            puts("2 - Charger une partie");
-            puts("3 - Recommencer la partie");
-            puts("4 - Continuer la partie");
-            couleur(RESET);
-
-            if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
+            if( choix[0] == '\0' ) printf("\nIl semblerait que vous n'avez rien entre du tout\n"\
+                                        "Veuillez entrer un chiffre correspondant a une colonne : ");
+            else if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
             else if( strtol(choix, NULL, 10) > 6 || strtol(choix, NULL, 10) < 0) printf("\nLe numero doit etre compris entre 0 et 6.\nVeuillez entrer un autre numero : ");
             reads(choix, 2);
         }

@@ -61,7 +61,12 @@ void clear_screen();
  */
 int confirm_answer();
 
-
+/**
+ * @brief Renvoie un struct tm (venant de time.h) contenant la date et l'heure au moment de l'appel de la fonction
+ * 
+ * @return struct tm
+*/
+struct tm get_date();
 
 /**
  * @brief Renvoie le plus petit nombre entre a et b.
@@ -73,17 +78,16 @@ int confirm_answer();
 int min(int a, int b);
 
 /**
- * @brief Renvoie un struct tm (venant de time.h) contenant la date et l'heure au moment de l'appel de la fonction
- * 
- * @return struct tm
-*/
-struct tm get_date();
-
-/**
  * @brief Permet aux utilisateurs d'entrer leurs prenoms dans les variables globales nomJoueurUn et nomJoueurDeux.
  * 
  */
 void player_name_change();
+
+/**
+ * @brief Affiche les choix disponibles dans la fonction settings_menu();
+ * 
+ */
+void print_settings_choices();
 
 /**
  * @brief Affiche de menu des reglages d'une partie libre
@@ -116,6 +120,12 @@ void set_default_settings();
 void savefile_display(int saveNumber);
 
 /**
+ * @brief affiche les choix dans la fonction savefile_menu
+ * 
+ */
+void print_savefiles_choices();
+
+/**
  * @brief Affiche les liste des sauvegardes et renvoie le choix de l'utilisateur
  * Si savefile_menu renvoie 0, cela veut dire que l'utilisateur veut retourner a l'ecran precedent
  * si ce que savefile_menu envoie est compris entre 1 et 3, ca veut dire que l'utilisateur a choisi un fichier de sauvegarde
@@ -142,7 +152,7 @@ int savefile_menu( const char *menuType );
  * @param savedGame struct puiss4 de la partie se deroulant 
  * @return int 
  */
-int write_savefile(FILE *destFile, puiss4 savedGame);
+int write_savefile(const char *fileName, puiss4 savedGame);
 
 /**
  * @brief verifie que le fichier de sauvegarde choisi est plein, 

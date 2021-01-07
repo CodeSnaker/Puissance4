@@ -39,9 +39,9 @@ int main()
 			case 1: // Regles de jeu
                 clear_screen(); 
 
-				couleur( ROUGE );
+				printf("\033[%sm",ROUGE);
 				printf( "Regles du jeu: \n\n" );
-				couleur( RESET );
+				printf("\033[%sm",RESET);
 				printf("Le but du jeu est d'aligner une suite de 4 pions de meme couleur sur une grille\n"\
 						"comptant 6 rangees et 7 colonnes ( reglables dans le mode libre ). Chaque joueur dispose de 21 pions, soit des croix soit des ronds.\n"\
 						"Tour a tour, les deux joueurs placent un pion dans la colonne de leur choix, le pion coulisse alors\n"\
@@ -172,9 +172,10 @@ int main()
 						}
 					}
 					
+					partie.resetPartie = 0;
 					clear_screen();
 					affiche_jeu( partie );
-
+					
 		 			for( tour += 0; tour < (nbCol*nbLignes); tour++ )
 					{        
 

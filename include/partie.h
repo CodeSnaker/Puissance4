@@ -29,7 +29,6 @@
 #define CYAN "36"
 #define BLANC "37"
 #define RESET "0"
-#define clrscr() printf("\033[H\033[2J")
 #define couleur(param) printf("\033[%sm",param)
 #endif
 
@@ -85,11 +84,23 @@ int check_row(puiss4 game, int initY, int initX, int stepY, int stepX, int pionJ
 int gagne( puiss4 jeu, int joueur );
 
 /**
+ * @brief Affiche les choix disponibles dans le menu principal
+ * 
+ */
+void print_main_menu_choices();
+
+/**
  * @brief affiche le menu principal et retourne le choix de l'utilisateur
  * 
  * @return int 
  */
 int menu_principal(void);
+
+/**
+ * @brief Affiche les choix disponibles dans le menu pause
+ * 
+ */
+void print_pause_menu_choices();
 
 /**
  * @brief affiche le menu pause lors d'une partie et retourne le choix de l'utilisateur

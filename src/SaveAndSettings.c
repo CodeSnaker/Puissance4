@@ -28,18 +28,19 @@ char nomJoueurUn[PLAYER_NAME_SIZE] = "Joueur1", nomJoueurDeux[PLAYER_NAME_SIZE] 
 
 void clear_screen()
 {
-    #ifdef _WIN32
+    #ifdef _WIN32 // Si la compilation est destinée à windows
 
     system("cls");
 
     #endif
 
-    #ifdef __linux__
+    #ifdef __linux__ // Si la compilation est destinée à linux
 
     system("clear");
 
     #endif
 }
+
 int confirm_answer()
 {
     char confirm[2];
@@ -50,9 +51,9 @@ int confirm_answer()
 
         while( strtol(confirm, NULL, 10) > 1 || strtol(confirm, NULL, 10) < 0 || !strisnumber( confirm ))
         {   
-            couleur(ROUGE);
+            printf("\033[%sm",ROUGE);
             printf( "Etes-vous sur de votre choix ?\n0 - Non\n1 - Oui\n");
-            couleur(RESET);
+            printf("\033[%sm",RESET);
 
             if( !strisnumber(confirm) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
             else if( strtol(confirm, NULL, 10) > 1 || strtol(confirm, NULL, 10) < 0) printf("\nLe numero doit etre compris entre 0 et 1.\nVeuillez entrer un autre numero : ");
@@ -64,7 +65,7 @@ int confirm_answer()
     return numConfirm;
 }
 
-struct tm get_date()
+struct tm get_date() // struct tm est défini dans time.h
 {
     time_t rawTime;
 
@@ -74,8 +75,8 @@ struct tm get_date()
 
     brokenDate = localtime( &rawTime );
 
-    brokenDate -> tm_year += 1900;
-    ++(brokenDate -> tm_mon);
+    brokenDate -> tm_year += 1900; // ce qui est stocké dans tm_year est le nombre d'années depuis 1900
+    ++(brokenDate -> tm_mon); // tm_mon est numerote de 0 a 11 au lieu de 1 a 12, donc on incremente
 
     return *brokenDate;
 }
@@ -105,6 +106,34 @@ void player_name_change()
 
 }
 
+void print_settings_choices()
+{
+        puts("--------------------------------");
+        puts("            SETTINGS            ");
+        puts("--------------------------------");
+
+        printf("\033[%sm",ROUGE);
+        printf("0 - Retour\n");
+        printf("\033[%sm",VERT);
+        printf("1 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
+        printf("2 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
+        printf("3 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
+
+        printf("4 - Changer le nom des joueurs ( ");
+        printf("\033[%sm",JAUNE);
+        printf("Joueur 1 actuel : %s ", nomJoueurUn);
+        printf("\033[%sm",VERT);
+        printf(";");
+        printf("\033[%sm",ROUGE);
+        printf(" Joueur 2 actuel : %s", nomJoueurDeux);
+        printf("\033[%sm",VERT);
+        printf(" )\n");
+        
+        printf("5 - Mettre les reglages par defaut\n");
+        printf("6 - Lancer la partie\n");
+        printf("\033[%sm",RESET);
+}
+
 int settings_menu()
 {
     char choix[2];
@@ -114,63 +143,18 @@ int settings_menu()
     while(!confirmation)
     {
 
-        puts("--------------------------------");
-        puts("            SETTINGS            ");
-        puts("--------------------------------");
-
-        couleur(ROUGE);
-        printf("0 - Retour\n");
-        couleur(VERT);
-        printf("1 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
-        printf("2 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
-        printf("3 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
-
-        printf("4 - Changer le nom des joueurs ( ");
-        couleur(JAUNE);
-        printf("Joueur 1 actuel : %s ", nomJoueurUn);
-        couleur(VERT);
-        printf(";");
-        couleur(ROUGE);
-        printf(" Joueur 2 actuel : %s", nomJoueurDeux);
-        couleur(VERT);
-        printf(" )\n");
-        
-        printf("5 - Mettre les reglages par defaut\n");
-        printf("6 - Lancer la partie\n");
-        couleur(RESET);
+       print_settings_choices();
 
         reads(choix, 2);
-        while( strtol(choix, NULL, 10) > 6 || strtol(choix, NULL, 10) < 0 || !isdigit(choix[0]))
+        while( strtol(choix, NULL, 10) > 6 || strtol(choix, NULL, 10) < 0 || !isdigit(choix[0]) || choix[0] == '\0')
         {   
             clear_screen();
 
-            puts("--------------------------------");
-            puts("            SETTINGS            ");
-            puts("--------------------------------");
+            print_settings_choices();
 
-
-            couleur(ROUGE);
-            printf("0 - Retour\n");
-            couleur(VERT);
-            printf("1 - Changer le nombre de lignes (Nombre de lignes actuel : %d)\n", nbLignes);
-            printf("2 - Changer le nombre de colonnes (Nombre de colonnes actuel : %d)\n", nbCol);
-            printf("3 - Changer le nombre de pions a aligner pour gagner (Nombre actuel : %d)\n", nbPionsGagnant);
-
-            printf("4 - Changer le nom des joueurs ( ");
-            couleur(JAUNE);
-            printf("Joueur 1 actuel : %s ", nomJoueurUn);
-            couleur(VERT);
-            printf(";");
-            couleur(ROUGE);
-            printf(" Joueur 2 actuel : %s", nomJoueurDeux);
-            couleur(VERT);
-            printf(" )\n");
-
-            printf("5 - Mettre les reglages par defaut\n");
-            printf("6 - Lancer la partie\n");
-            couleur(RESET);
-
-            if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
+            if( choix[0] == '\0' ) printf("\nIl semblerait que vous n'avez rien entre du tout\n"\
+                                        "Veuillez entrer un chiffre correspondant a une colonne : ");
+            else if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
             else if( strtol(choix, NULL, 10) > 6 || strtol(choix, NULL, 10) < 0) printf("\nLe numero doit etre compris entre 0 et 5.\nVeuillez entrer un autre numero : ");
             reads(choix, 2);
             }
@@ -198,8 +182,8 @@ void settings( int settingsChoice)
             printf("\n\nVeuillez entrer un nombre compris entre %d et %d : ", NB_LIGNE_MIN, NB_LIGNE_MAX);
 
             reads(tempBuffer, 3);
-            while( strtol(tempBuffer, NULL, 10) > NB_LIGNE_MAX || strtol(tempBuffer, NULL, 10) < NB_LIGNE_MIN || !strisnumber(tempBuffer))
-            {
+            while( strtol(tempBuffer, NULL, 10) > NB_LIGNE_MAX || strtol(tempBuffer, NULL, 10) < NB_LIGNE_MIN || !strisnumber(tempBuffer) )
+            {   
                 if( !strisnumber( tempBuffer )) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
                 else if( strtol(tempBuffer, NULL, 10) > NB_LIGNE_MAX || strtol(tempBuffer, NULL, 10) < NB_LIGNE_MIN) printf("\nLe numero doit etre compris entre %d et %d.\nVeuillez entrer un autre numero : ", NB_LIGNE_MIN, NB_LIGNE_MAX);
                 
@@ -243,7 +227,7 @@ void settings( int settingsChoice)
 
         case 3: // modifier le nombre de pions a aligner
 
-            printf("Veuillez entrer un nombre compris entre %d et %d ( max delimite par les nombres de colonnes et de lignes) : ", NB_PIONS_WIN_MIN, min( nbLignes, nbCol ));
+            printf("Veuillez entrer un nombre compris entre %d et %d ( max de25e par les nombres de colonnes et de lignes) : ", NB_PIONS_WIN_MIN, min( nbLignes, nbCol ));
 
             reads(tempBuffer, 3);
             while( strtol(tempBuffer, NULL, 10) > min(nbLignes, nbCol)  || strtol(tempBuffer, NULL, 10) < NB_PIONS_WIN_MIN|| !strisnumber(tempBuffer))
@@ -312,47 +296,89 @@ void savefile_display(int saveNumber)
     }
     else
     {
-        if ( fseek( fileToRead, 0, SEEK_SET ) ) 
-        {
-            printf( "\nErreur : le curseur n'a pas pu etre place au debut du fichier.\nLa sauvegarde n'a pas pu etre affichee.\n" );
-            fclose(fileToRead);
-            return;
-        }
+        fseek(fileToRead, 0, SEEK_SET);
 
         //Affichage des joueurs
-        readfile(tempBuffer, 25, fileToRead);
+        char *pointToNewline=NULL;
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("%s vs ", tempBuffer);
-        readfile(tempBuffer, 25, fileToRead);
+
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("%s\n", tempBuffer);
 
         //Affichage de la date
-        readfile(tempBuffer, 25, fileToRead);
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("    Date = %s/", tempBuffer);
-        readfile(tempBuffer, 25, fileToRead);
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("%s/", tempBuffer);
-        readfile(tempBuffer, 25, fileToRead);
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("%s  ", tempBuffer);
-        readfile(tempBuffer, 25, fileToRead);
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("Heure = %s:", tempBuffer);
-        readfile(tempBuffer, 25, fileToRead);
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("%s\n", tempBuffer);
 
-        readfile(tempBuffer, 25, fileToRead);
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("    Tour = %s\n", tempBuffer);        
 
         // Affichage des parametres de jeu
-        readfile(tempBuffer, 25, fileToRead);
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("    Nombre de lignes = %s\n", tempBuffer);
-        readfile(tempBuffer, 25, fileToRead);
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("    Nombre de colonnes = %s\n", tempBuffer);
-        readfile(tempBuffer, 25, fileToRead);
+        fgets(tempBuffer, 26, fileToRead);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         printf("    Nombre de pions a aligner = %s\n\n", tempBuffer);
     }
 
-    fclose(fileToRead);
-
 }
 
+void print_savefile_choices()
+{
+    puts("-----------------------------------------------");
+    puts("            FICHIERS DE SAUVEGARDES            ");
+    puts("-----------------------------------------------");
+
+    printf("\033[%sm",ROUGE);
+    printf("0 - Retour\n");
+    printf("\033[%sm",VERT);
+
+    printf("1 - ");
+    printf("\033[%sm",JAUNE);
+    savefile_display(1);
+    printf("\033[%sm",VERT);
+
+    printf("2 - ");
+    printf("\033[%sm",JAUNE);
+    savefile_display(2);
+    printf("\033[%sm",VERT);
+
+    printf("3 - ");
+    printf("\033[%sm",JAUNE);
+    savefile_display(3);
+    printf("\033[%sm",RESET);
+}
 
 int savefile_menu(const char *menuType)
 {
@@ -362,58 +388,18 @@ int savefile_menu(const char *menuType)
     int numChoix;
 
     printf("%s\n", menuType);
-    puts("-----------------------------------------------");
-    puts("            FICHIERS DE SAUVEGARDES            ");
-    puts("-----------------------------------------------");
-
-    couleur(ROUGE);
-    printf("0 - Retour\n");
-    couleur(VERT);
-
-    printf("1 - ");
-    couleur(JAUNE);
-    savefile_display(1);
-    couleur(VERT);
-
-    printf("2 - ");
-    couleur(JAUNE);
-    savefile_display(2);
-    couleur(VERT);
-
-    printf("3 - ");
-    couleur(JAUNE);
-    savefile_display(3);
-    couleur(RESET);
+    print_savefile_choices();
 
     reads(choix, 2);
-    while( strtol(choix, NULL, 10) > 5 || strtol(choix, NULL, 10) < 0 || !isdigit(choix[0]))
+    while( strtol(choix, NULL, 10) > 5 || strtol(choix, NULL, 10) < 0 || !isdigit(choix[0]) || choix[0] == '\0')
     {   
         clear_screen();
         printf("%s\n", menuType);
-        puts("-----------------------------------------------");
-        puts("            FICHIERS DE SAUVEGARDES            ");
-        puts("-----------------------------------------------");
+        print_savefile_choices();
 
-        couleur(ROUGE);
-        printf("0 - Retour\n");
-        couleur(VERT);
-
-        printf("1 - ");
-        couleur(JAUNE);
-        savefile_display(1);
-        couleur(VERT);
-
-        printf("2 - ");
-        couleur(JAUNE);
-        savefile_display(2);
-        couleur(VERT);
-
-        printf("3 - ");
-        couleur(JAUNE);
-        savefile_display(3);
-        couleur(RESET);
-
-        if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
+        if( choix[0] == '\0' ) printf("\nIl semblerait que vous n'avez rien entre du tout\n"\
+                                        "Veuillez entrer un chiffre correspondant a une colonne : ");    
+        else if( !strisnumber(choix) ) printf("\nCe que vous avez entre n'est pas un numero !\nVeuillez entrer un numero : ");
         else if( strtol(choix, NULL, 10) > 3 || strtol(choix, NULL, 10) < 0) printf("\nLe numero doit etre compris entre 0 et 3.\nVeuillez entrer un autre numero : ");
         reads(choix, 2);
         }
@@ -424,8 +410,18 @@ int savefile_menu(const char *menuType)
 }
 
 
-int write_savefile(FILE *destFile, puiss4 savedGame)
+int write_savefile(const char *fileName, puiss4 savedGame)
 {
+    FILE *destFile = NULL;
+
+    destFile = fopen(fileName, "w");
+
+    if (destFile == NULL)
+    {
+        printf("Erreur : le fichier n'a pas pu être ouvert.");
+        return 0;
+    }
+    
     struct tm date;
 
     date = get_date();
@@ -433,6 +429,7 @@ int write_savefile(FILE *destFile, puiss4 savedGame)
     if( fseek(destFile, 0, SEEK_SET) )
     {
         printf("\nFailed to get at beginning of save file.\n");
+        fclose(destFile);
         return 0;
     }
 
@@ -460,7 +457,7 @@ int write_savefile(FILE *destFile, puiss4 savedGame)
     {
         fprintf(destFile, "%d\n", savedGame.dernier_pion[h]);
     }
-
+    fclose( destFile );
     return 1;
 }
 
@@ -487,8 +484,8 @@ int overwrite_file(const char *fileName, puiss4 currentGame)
 
     if ( ftell( saveFile ) == 0 )
     {
-        write_savefile(saveFile, currentGame);
-        fclose( saveFile );
+        fclose( saveFile ); // On ferme le fichier pour pouvoir l'ouvrir dans la fonction write_savefile
+        write_savefile(fileName, currentGame);
         return 1;
     }
     else
@@ -497,20 +494,21 @@ int overwrite_file(const char *fileName, puiss4 currentGame)
         confirmation = confirm_answer();
         if ( confirmation )
         {
-            fclose( saveFile ); // en mode a+, toutes les fonctions qui ecrivent dans le fichier remettent le curseur a la fin, donc on passe en mode w pour ecraser le fichier
-            saveFile = fopen ( fileName, "w");
-            if ( !write_savefile(saveFile, currentGame) ) 
+            fclose( saveFile ); // On ferme le fichier pour pouvoir l'ouvrir dans la fonction write_savefile
+            
+            if ( !write_savefile(fileName, currentGame) ) 
             {
                 printf("Erreur : l'ecriture de la sauvegarde n'a pas pu etre effectuee.\n");
-                fclose(saveFile);
+                
                 return 0;
             }
-            fclose( saveFile );
+            
             return 1;
         }
+        fclose(saveFile);
     }
     
-    fclose(saveFile);
+    
 
     return 0;
 }
@@ -610,32 +608,46 @@ int load_save( puiss4 *destGrid, int saveSlot )
             fclose(loadedFile);
             return 0;
         }
-
         // Chargement des noms de joueur
-        readfile( tempBuffer, 25, loadedFile );
+        char *pointToNewline = NULL;
+        fgets(tempBuffer, 26, loadedFile);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         strcpy( nomJoueurUn, tempBuffer );
 
-        readfile( tempBuffer, 25, loadedFile );
+        fgets(tempBuffer, 26, loadedFile);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         strcpy( nomJoueurDeux, tempBuffer );
 
         //On passe les lignes de date
         for ( int i = 0; i < 5; i++ )
         {
-            readfile( tempBuffer, 25, loadedFile );
+            fgets(tempBuffer, 26, loadedFile);
+            pointToNewline = strchr(tempBuffer, '\n');
+            *pointToNewline = '\0';
         }
         
         // Chargement du numero de tour
-        readfile( tempBuffer, 25, loadedFile );
+        fgets(tempBuffer, 26, loadedFile);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         tour = strtol( tempBuffer, NULL, 10);
 
         // Chargement des parametres de jeu
-        readfile( tempBuffer, 25, loadedFile );
+        fgets(tempBuffer, 26, loadedFile);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         nbLignes = strtol( tempBuffer, NULL, 10);
 
-        readfile( tempBuffer, 25, loadedFile );
+        fgets(tempBuffer, 26, loadedFile);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         nbCol = strtol( tempBuffer, NULL, 10);
 
-        readfile( tempBuffer, 25, loadedFile );
+        fgets(tempBuffer, 26, loadedFile);
+        pointToNewline = strchr(tempBuffer, '\n');
+        *pointToNewline = '\0';
         nbPionsGagnant = strtol( tempBuffer, NULL, 10);
 
         // Chargements du struct puiss4
@@ -643,14 +655,18 @@ int load_save( puiss4 *destGrid, int saveSlot )
         {
             for ( int colonne = 0; colonne < nbCol; colonne++ )
             {
-                readfile( tempBuffer, 25, loadedFile );
+                fgets(tempBuffer, 26, loadedFile);
+                pointToNewline = strchr(tempBuffer, '\n');
+                *pointToNewline = '\0';
                 destGrid->grille [ ligne ] [ colonne ] = strtol( tempBuffer, NULL, 10);
             }
         }
 
         for ( int h = 0; h < nbCol; h++ )
         {
-            readfile( tempBuffer, 25, loadedFile);
+            fgets(tempBuffer, 26, loadedFile);
+            pointToNewline = strchr(tempBuffer, '\n');
+            *pointToNewline = '\0';
             destGrid->dernier_pion [ h ] = strtol( tempBuffer, NULL, 10);
         }
 
