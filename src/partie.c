@@ -301,7 +301,7 @@ void print_main_menu_choices()
 	printf("\033[%sm",VERT);
 	puts("1 - Regles du jeu");
 	puts("2 - Jouer a 2");
-	puts("3 - Mode libre (choix du nombre de manches et nombre lignes/colonnes)"); 
+	puts("3 - Mode libre et paramètres du jeu"); 
     puts("4 - Charger une sauvegarde");
     puts("5 - Supprimer une sauvegarde");
     printf("\033[%sm",RESET);
