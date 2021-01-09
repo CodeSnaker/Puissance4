@@ -108,7 +108,7 @@ void player_name_change()
 void print_settings_choices()
 {
     puts("--------------------------------");
-    puts("            SETTINGS            ");
+    puts("            PARAMETRES            ");
     puts("--------------------------------");
 
     printf("\033[%sm",ROUGE);
