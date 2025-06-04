@@ -1,7 +1,7 @@
 # Puissance4
 Univ Project
 
-Ce petit programme est un jeu de puissance 4 ("4-in-a-row" en anglais) destiné à être lancé dans un terminal linux.
+Ce petit programme est un jeu de puissance 4 ("4-in-a-row" en anglais) destiné à être lancé dans un shell.
 
 Il contient actuellement les fonctionnalités suivantes :
 
